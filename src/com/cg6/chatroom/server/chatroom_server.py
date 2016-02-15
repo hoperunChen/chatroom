@@ -3,10 +3,10 @@ Created on 2016-1-27
 
 @author: cr
 '''
-from SocketServer import SocketServer
+from com.cg6.chatroom.server import socket_server
 from com.cg6.chatroom import constants
 
-class ChatroomServer(SocketServer):
+class ChatroomServer(socket_server.SocketServer):
     '''
     ChatroomServer
     '''
@@ -26,6 +26,8 @@ class ChatroomServer(SocketServer):
         if data.find(constants.FN_SEPARATOR)==0:
             name = data[data.find(constants.FN_SEPARATOR)+len(constants.FN_SEPARATOR):len(data)]
             self.clientList[clientAddr]['nickName'] = name
+            clientSock.send('hello '+name)
+            clientSock.send(constants.FN_SEPARATOR+'ok')
         else:
             for client in self.clientList.values():
                 client['sock'].send(self.clientList[clientAddr][self.KEY_CLIENT_NICKNAME]+':'+data)

@@ -20,6 +20,7 @@ class SocketServer(object):
         self._server.bind((self._ipaddr,self._port))
         self._server.listen(self._maxConn)
         
+        
     def start(self):
         while True:
             print 'chat room Service begin start'

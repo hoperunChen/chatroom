@@ -29,6 +29,11 @@ class ChartroomClient:
         while True:
             data = socket.recv(1024)
             print '\n' + data
+            if data.find(constants.FN_SEPARATOR)==0:
+                result = data[data.find(constants.FN_SEPARATOR)+len(constants.FN_SEPARATOR):len(data)]
+                if result == 'ok':
+                    self._isInited = True
+                    continue
             time.sleep(1)
             
     def setName(self):
@@ -40,7 +45,7 @@ class ChartroomClient:
         self.__receive()
         while True:
             if self._isInited:
-                msg = raw_input('')
+                msg = raw_input('---')
                 self._socket.send(msg)
             time.sleep(1)
         
